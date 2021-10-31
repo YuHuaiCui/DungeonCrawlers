@@ -17,6 +17,7 @@ void keyPressed() {
   if (keyCode == DOWN)  downkey  = true;
   if (keyCode == LEFT)  leftkey  = true;
   if (keyCode == RIGHT) rightkey = true;
+  if (keyCode == '1')   onekey   = true;
   if (keyCode == ' ')   spacekey = true;
   if (keyCode == 'W' || keyCode == 'w' )   wkey = true;
   if (keyCode == 'S' || keyCode == 's' )   skey = true;
@@ -29,6 +30,7 @@ void keyReleased() {
   if (keyCode == DOWN)  downkey  = false;
   if (keyCode == LEFT)  leftkey  = false;
   if (keyCode == RIGHT) rightkey = false;
+  if (keyCode == '1')   onekey   = false;
   if (keyCode == ' ')   spacekey = false;
   if (keyCode == 'W' || keyCode == 'w' )   wkey = false;
   if (keyCode == 'S' || keyCode == 's' )   skey = false;

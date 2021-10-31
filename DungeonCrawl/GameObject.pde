@@ -20,11 +20,11 @@ class GameObject {
     //check for hittin walls
     for (int i = 0; i < myObjects.size(); i++) {
       GameObject obj = myObjects.get(i);
-      if (obj != myHero) {
-        if (loc.x < width*0.125) loc.x = width*0.125;
-        if (loc.x > width*0.875) loc.x = width*0.875;
-        if (loc.y < height*0.125) loc.y = height*0.125;
-        if (loc.y > height*0.875) loc.y = height*0.875;
+      if (obj instanceof Hero) {
+        if (loc.x < width*0.1 + size/2) loc.x = width*0.1 + size/2;
+        if (loc.x > width*0.9 + size/2) loc.x = width*0.9 + size/2;
+        if (loc.y < height*0.1 + size/2) loc.y = height*0.1 + size/2;
+        if (loc.y > height*0.9 + size/2) loc.y = height*0.9 + size/2;
       } 
     }
   }

@@ -8,7 +8,7 @@ class Hero extends GameObject {
     roomX = 1;
     roomY = 1;
     speed = 5;
-    size = 50;
+    size = 0;
     faceRight = true;
     faceLeft = false;
   }
@@ -18,6 +18,8 @@ class Hero extends GameObject {
 
     //this rect will be the hitbox
     //rect(loc.x, loc.y, 50, 60);
+    
+    //Show Hero
     if (vel.x > 1 || vel.y > 1 || vel.x < -1 || vel. y < -1) {
       if (faceRight) {
         movingRight.centerMovingShow(loc.x, loc.y, 60, 60);
@@ -26,8 +28,11 @@ class Hero extends GameObject {
       }
     } else {
       if (faceRight) standingRight.centerMovingShow(loc.x, loc.y, 60, 60);
-      else if (faceLeft) standingLeft.centerMovingShow(loc.x, loc.y, 60, 60); 
+      else if (faceLeft) standingLeft.centerMovingShow(loc.x, loc.y, 60, 60);
     }
+    
+    //Show Weapon
+    if (onekey) myWeapon.current = 1;
   }
 
   void act() {

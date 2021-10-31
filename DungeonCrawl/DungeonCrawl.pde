@@ -8,7 +8,7 @@ import processing.javafx.*;
 //booleans
 boolean mouseReleased;
 boolean hadPressed;
-boolean upkey, downkey, leftkey, rightkey, spacekey, wkey, skey, akey, dkey;
+boolean upkey, downkey, leftkey, rightkey, spacekey, wkey, skey, akey, dkey, onekey;
 
 //colors
 color base;
@@ -42,6 +42,7 @@ final int PAUSE = 3;
 ArrayList<GameObject> myObjects; 
 ArrayList<DarknessCell> darkness;
 Hero myHero;
+Weapon myWeapon;
 Button playButton;
 Button exitButton;
 
@@ -70,7 +71,9 @@ void setup() {
   //create objects
   myObjects = new ArrayList<GameObject>(1000);
   myHero = new Hero();
+  myWeapon = new Weapon();
   myObjects.add(myHero);
+  myObjects.add(myWeapon);
   
   //load font
   dark = createFont("pdark.ttf", 32);
