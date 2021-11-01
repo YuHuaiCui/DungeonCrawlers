@@ -80,8 +80,8 @@ class Button { //Start of Buttons Class
   }
 
   void actCircle(float x, float y, float d) {
-      if (mouseReleased && (dist(mouseX, mouseY, x, y) <= d/2)) {
-        clicked = true;
+    if (mouseReleased && (dist(mouseX, mouseY, x, y) <= d/2)) {
+      clicked = true;
     } else {
       clicked = false;
     }

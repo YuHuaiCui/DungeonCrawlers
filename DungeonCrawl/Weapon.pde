@@ -2,14 +2,15 @@ class Weapon extends GameObject {
   int current;
   final int RIFLE = 1;
   final int SHOTGUN = 2;
-  final int RICOCHET = 3;
-  //final int KNIFE = 4;
+  //final int PISTOL = 3;
+  int shoot, shootTimer;
 
   Weapon() {
     loc = new PVector(myHero.loc.x, myHero.loc.y);
     vel = new PVector(0, 0);
     hp = 1;
     current = 1;
+    shoot = 0;
   }
 
   void show() {
@@ -17,8 +18,6 @@ class Weapon extends GameObject {
       rifleShow();
     } else if (current == SHOTGUN) {
       shotgunShow();
-    } else if (current == RICOCHET) {
-      ricochetShow();
     } else {
       println("WEAPONS.SHOW ERROR!");
     }
@@ -31,38 +30,47 @@ class Weapon extends GameObject {
       rifleAct();
     } else if (current == SHOTGUN) {
       shotgunAct();
-    } else if (current == RICOCHET) {
-      ricochetAct();
     } else {
-      println("WEAPONS.SHOW ERROR!");
+      println("WEAPONS.ACT ERROR!");
     }
   } //End of act
 
   void rifleShow() {
+    //firerate
+    shootTimer = 10;
+    
     rectMode(CENTER);
+    imageMode(CENTER);
     noStroke();
     fill(yellow);
     if (myHero.faceRight) {
-      rect(myHero.loc.x + 10, myHero.loc.y + 10, 30, 10);
+      pushMatrix();
+      translate(myHero.loc.x+20, myHero.loc.y+20);
+      rotate(-atan2(myHero.vel.x, myHero.vel.y) - (HALF_PI * 3));
+      image(rifleRight, 0, 0, 60, 30);
+      popMatrix();
     } else if (myHero.faceLeft) {
-      rect(myHero.loc.x - 10, myHero.loc.y + 10, 30, 10);
+      pushMatrix();
+      translate(myHero.loc.x-20, myHero.loc.y+20);
+      rotate(-atan2(myHero.vel.x, myHero.vel.y) + (HALF_PI * 3));
+      image(rifleLeft, 0, 0, 60, 30);
+      popMatrix();
     }
+    imageMode(CENTER);
     rectMode(CORNER);
   } //End of rifleShow
 
   void shotgunShow() {
   } //End of shotgunShow
 
-  void ricochetShow() {
-  } //End of ricochetShow
-
   void rifleAct() {
-    if (spacekey) myObjects.add(new Bullet());
+    shoot++;
+      if (shoot >= shootTimer) {
+      if (spacekey) myObjects.add(new Bullet(current));
+      shoot = 0;
+    }
   } //End of rifleAct
 
   void shotgunAct() {
   } //End of shotgunAct
-
-  void ricochetAct() {
-  } //End of ricochetAct
 }

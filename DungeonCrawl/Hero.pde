@@ -22,13 +22,13 @@ class Hero extends GameObject {
     //Show Hero
     if (vel.x > 1 || vel.y > 1 || vel.x < -1 || vel. y < -1) {
       if (faceRight) {
-        movingRight.centerMovingShow(loc.x, loc.y, 60, 60);
+        movingRight.centerMovingShow(loc.x, loc.y, 90, 90);
       } else if (faceLeft) {
-        movingLeft.centerMovingShow(loc.x, loc.y, 60, 60);
+        movingLeft.centerMovingShow(loc.x, loc.y, 90, 90);
       }
     } else {
-      if (faceRight) standingRight.centerMovingShow(loc.x, loc.y, 60, 60);
-      else if (faceLeft) standingLeft.centerMovingShow(loc.x, loc.y, 60, 60);
+      if (faceRight) standingRight.centerMovingShow(loc.x, loc.y, 90, 90);
+      else if (faceLeft) standingLeft.centerMovingShow(loc.x, loc.y, 90, 90);
     }
     
     //Show Weapon
@@ -56,14 +56,14 @@ class Hero extends GameObject {
     if (!akey && !dkey && !leftkey && !rightkey) vel.x = vel.x * 0.75;
 
     //wall collisions
-    if (northRoom == #FFFFFF && loc.y < height*0.125) loc.y = height*0.125;
-    if (southRoom == #FFFFFF && loc.y > height*0.875) loc.y = height*0.875;
-    if (eastRoom == #FFFFFF && loc.x > width*0.875) loc.x = width*0.875;
-    if (westRoom == #FFFFFF && loc.x < width*0.125) loc.x = width*0.125;
-    if (northRoom != #FFFFFF && loc.y < height*0.125 && (loc.x < width/2-50 || loc.x > width/2+50)) loc.y = height*0.125;
-    if (southRoom != #FFFFFF && loc.y > height*0.875 && (loc.x < width/2-50 || loc.x > width/2+50)) loc.y = height*0.875;
-    if (eastRoom != #FFFFFF && loc.x > width*0.875 && (loc.y < height/2-50 || loc.y > height/2+50)) loc.x = width*0.875;
-    if (westRoom != #FFFFFF && loc.x < width*0.125 && (loc.y < height/2-50 || loc.y > height/2+50)) loc.x = width*0.125;
+    if (northRoom == #FFFFFF && loc.y < height*0.125) loc.y = height*0.129;
+    if (southRoom == #FFFFFF && loc.y > height*0.875) loc.y = height*0.871;
+    if (eastRoom == #FFFFFF && loc.x > width*0.875) loc.x = width*0.871;
+    if (westRoom == #FFFFFF && loc.x < width*0.125) loc.x = width*0.129;
+    if (northRoom != #FFFFFF && loc.y < height*0.125 && (loc.x < width/2-90 || loc.x > width/2+90)) loc.y = height*0.129;
+    if (southRoom != #FFFFFF && loc.y > height*0.875 && (loc.x < width/2-90 || loc.x > width/2+90)) loc.y = height*0.871;
+    if (eastRoom != #FFFFFF && loc.x > width*0.875 && (loc.y < height/2-90 || loc.y > height/2+90)) loc.x = width*0.871;
+    if (westRoom != #FFFFFF && loc.x < width*0.125 && (loc.y < height/2-90 || loc.y > height/2+90)) loc.x = width*0.129;
 
     //check exits
     //north

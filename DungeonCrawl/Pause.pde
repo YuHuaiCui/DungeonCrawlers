@@ -1,7 +1,5 @@
 void pause() {
-  
 }
 
 void pauseReleased() {
-  
 }

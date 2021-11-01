@@ -52,6 +52,9 @@ PFont dark;
 //pimages
 PImage dwall;
 PImage map;
+PImage rifleRight;
+PImage rifleLeft;
+PImage rifleBullet;
 
 void setup() {
   size(1000, 1000, FX2D);
@@ -59,7 +62,7 @@ void setup() {
   textAlign(CENTER, CENTER);
   rectMode(CENTER);
   imageMode(CENTER);
-  
+
   //create darkness
   darkness = new ArrayList<DarknessCell>();
   for (int y = 0; y < height; y += 10) {
@@ -67,17 +70,17 @@ void setup() {
       darkness.add(new DarknessCell(x, y, 10));
     }
   }
-  
+
   //create objects
   myObjects = new ArrayList<GameObject>(1000);
   myHero = new Hero();
   myWeapon = new Weapon();
   myObjects.add(myHero);
   myObjects.add(myWeapon);
-  
+
   //load font
   dark = createFont("pdark.ttf", 32);
-  
+
   //load gif
   corridor = new Gif(1, 5, "corridor", ".png", 2, 0, 0, width, height, false);
   wall = new Gif(1, 8, "wall", ".png", 2, 0, 0, width, height, false);
@@ -85,22 +88,25 @@ void setup() {
   standingLeft = new Gif(1, 6, "standingLeft", ".png", 2, 0, 0, 60, 60, false);
   movingRight = new Gif(1, 6, "movingRight", ".png", 4, 0, 0, 60, 60, false);
   movingLeft = new Gif(1, 6, "movingLeft", ".png", 4, 0, 0, 60, 60, false);
-  
+
   //load image
   dwall = loadImage("dwall.png");
   map = loadImage("map.png"); 
+  rifleRight = loadImage("rifleRight.png");
+  rifleLeft = loadImage("rifleLeft.png");
+  rifleBullet = loadImage("rifleBullet.png");
 }
 
 void draw() {
   //mouseReleased
   if (mousePressed) hadPressed = true;
   if (!mousePressed && hadPressed) {
-     mouseReleased = true;
-     hadPressed = false;
-    } else {
-     mouseReleased = false; 
-    }
-    
+    mouseReleased = true;
+    hadPressed = false;
+  } else {
+    mouseReleased = false;
+  }
+
   if (mode == HOME) {
     home();
   } else if (mode == GAME) {
