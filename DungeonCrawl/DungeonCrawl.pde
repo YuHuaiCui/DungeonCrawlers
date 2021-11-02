@@ -8,7 +8,8 @@ import processing.javafx.*;
 //booleans
 boolean mouseReleased;
 boolean hadPressed;
-boolean upkey, downkey, leftkey, rightkey, spacekey, wkey, skey, akey, dkey, onekey;
+boolean upkey, downkey, leftkey, rightkey, spacekey, wkey, skey, akey, dkey, shiftkey;
+boolean onekey, twokey, threekey, fourkey, fivekey, sixkey;
 
 //colors
 color base;
@@ -39,10 +40,10 @@ final int GAMEOVER = 2;
 final int PAUSE = 3;
 
 //objects
-ArrayList<GameObject> myObjects; 
+ArrayList<GameObject> myObjects;
+ArrayList<Weapon> myWeapon;
 ArrayList<DarknessCell> darkness;
 Hero myHero;
-Weapon myWeapon;
 Button playButton;
 Button exitButton;
 
@@ -52,9 +53,19 @@ PFont dark;
 //pimages
 PImage dwall;
 PImage map;
+PImage rifleBullet;
 PImage rifleRight;
 PImage rifleLeft;
-PImage rifleBullet;
+PImage shotgunRight;
+PImage shotgunLeft;
+PImage smgRight;
+PImage smgLeft;
+PImage sniperRight;
+PImage sniperLeft;
+PImage launcherLeft;
+PImage launcherRight;
+PImage pistolRight;
+PImage pistolLeft;
 
 void setup() {
   size(1000, 1000, FX2D);
@@ -74,9 +85,12 @@ void setup() {
   //create objects
   myObjects = new ArrayList<GameObject>(1000);
   myHero = new Hero();
-  myWeapon = new Weapon();
   myObjects.add(myHero);
-  myObjects.add(myWeapon);
+  myWeapon = new ArrayList<Weapon>(1000);
+  myWeapon.add(new Rifle());
+  myWeapon.add(new Shotgun());
+  myWeapon.add(new SMG());
+  myWeapon.add(new Sniper());
 
   //load font
   dark = createFont("pdark.ttf", 32);
@@ -91,10 +105,20 @@ void setup() {
 
   //load image
   dwall = loadImage("dwall.png");
-  map = loadImage("map.png"); 
+  map = loadImage("map.png");
+  rifleBullet = loadImage("rifleBullet.png");
   rifleRight = loadImage("rifleRight.png");
   rifleLeft = loadImage("rifleLeft.png");
-  rifleBullet = loadImage("rifleBullet.png");
+  shotgunRight = loadImage("shotgunRight.png");
+  shotgunLeft = loadImage("shotgunLeft.png");
+  smgRight = loadImage("smgRight.png");
+  smgLeft = loadImage("smgLeft.png");
+  sniperRight = loadImage("sniperRight.png");
+  sniperLeft = loadImage("sniperLeft.png");
+  launcherRight = loadImage("launcherRight.png");
+  launcherLeft = loadImage("launcherLeft.png");
+  pistolRight = loadImage("pistolRight.png");
+  pistolLeft = loadImage("pistolLeft.png");
 }
 
 void draw() {

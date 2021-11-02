@@ -73,7 +73,6 @@ void drawDarkness() {
 }
 
 void drawMap() {
-  //southRoom = map.get(myHero.roomX, myHero.roomY+1);
   pushMatrix();
   translate(30, 30);
   fill(gray);
@@ -82,8 +81,8 @@ void drawMap() {
   rectMode(CENTER);
   rect(50, 50, 120, 120);
   rectMode(CORNER);
-  for (int y = 0; y < 10; y++) {
-    for (int x = 0; x < 10; x++) {
+  for (int y = 0; y < map.height; y++) {
+    for (int x = 0; x < map.width; x++) {
       noStroke();
       color a = map.get(x, y);
       fill(a);
