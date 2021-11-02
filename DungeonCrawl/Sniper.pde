@@ -6,8 +6,8 @@ class Sniper extends Weapon{
     offsetX = 20;
     offsetY = 20;
     gun = 4;
-    //shootTimer = 25;
-    shootTimer = 4;
+    shootTimer = 25;
+    m = 2;
   }
   
   void update() {

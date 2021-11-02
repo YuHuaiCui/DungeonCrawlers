@@ -52,8 +52,19 @@ PFont dark;
 
 //pimages
 PImage dwall;
+PImage tile;
+PImage doorClosed;
+PImage doorHalfClosed;
+PImage doorHalfOpened;
+PImage doorOpened;
 PImage map;
 PImage rifleBullet;
+PImage shotgunBullet;
+PImage smgBullet;
+PImage sniperBullet;
+PImage launcherBullet;
+PImage launcherShell;
+PImage pistolBullet;
 PImage rifleRight;
 PImage rifleLeft;
 PImage shotgunRight;
@@ -66,6 +77,7 @@ PImage launcherLeft;
 PImage launcherRight;
 PImage pistolRight;
 PImage pistolLeft;
+PImage muzzleFlash;
 
 void setup() {
   size(1000, 1000, FX2D);
@@ -91,6 +103,8 @@ void setup() {
   myWeapon.add(new Shotgun());
   myWeapon.add(new SMG());
   myWeapon.add(new Sniper());
+  myWeapon.add(new Launcher());
+  myWeapon.add(new Pistol());
 
   //load font
   dark = createFont("pdark.ttf", 32);
@@ -105,8 +119,19 @@ void setup() {
 
   //load image
   dwall = loadImage("dwall.png");
+  tile = loadImage("tile.png");
+  doorClosed = loadImage("doorClosed.png");
+  doorHalfClosed = loadImage("doorHalfClosed.png");
+  doorHalfOpened = loadImage("doorHalfOpened.png");
+  doorOpened = loadImage("doorOpened.png");
   map = loadImage("map.png");
   rifleBullet = loadImage("rifleBullet.png");
+  shotgunBullet = loadImage("shotgunBullet.png");
+  smgBullet = loadImage("smgBullet.png");
+  sniperBullet = loadImage("sniperBullet.png");
+  launcherBullet = loadImage("launcherBullet.png");
+  launcherShell = loadImage("launcherShell.png");
+  pistolBullet = loadImage("pistolBullet.png");
   rifleRight = loadImage("rifleRight.png");
   rifleLeft = loadImage("rifleLeft.png");
   shotgunRight = loadImage("shotgunRight.png");
@@ -119,6 +144,7 @@ void setup() {
   launcherLeft = loadImage("launcherLeft.png");
   pistolRight = loadImage("pistolRight.png");
   pistolLeft = loadImage("pistolLeft.png");
+  muzzleFlash = loadImage("smgFlash.png");
 }
 
 void draw() {

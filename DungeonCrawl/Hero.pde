@@ -7,25 +7,22 @@ class Hero extends GameObject {
   final int SHOTGUN = 2;
   final int SMG = 3;
   final int SNIPER = 4;
+  final int LAUNCHER = 5;
+  final int PISTOL = 6;
+  Weapon currentGun;
 
   Hero() {
     super();
     roomX = 1;
     roomY = 1;
     speed = 5;
-    size = 0;
+    size = 90;
     faceRight = true;
     faceLeft = false;
     current = 1;
   }
 
   void show() {
-    //circle(loc.x, loc.y, size);
-
-    //this rect will be the hitbox
-    //rect(loc.x, loc.y, 50, 60);
-
-    //Show Hero
     float a = atan2(mouseX-myHero.loc.x, mouseY-myHero.loc.y) - (HALF_PI * 3);
     if (a < -HALF_PI && a > -HALF_PI*3) {
       faceRight = true;
@@ -54,42 +51,16 @@ class Hero extends GameObject {
       current = SMG;
     } else if (fourkey) {
       current = SNIPER;
-    }
+    } else if (fivekey) {
+      current = LAUNCHER;
+    } else if (sixkey) {
+      current = PISTOL;
+    } 
 
     //Show weapon
-    if (current == RIFLE) {
-      for (int i = 0; i < myWeapon.size(); i++) {
-        Weapon myWeps = myWeapon.get(i);
-        if (myWeps instanceof Rifle) {
-          myWeps.update();
-          myWeps.shoot();
-        }
-      }
-    } else if (current == SHOTGUN) {
-      for (int i = 0; i < myWeapon.size(); i++) {
-        Weapon myWeps = myWeapon.get(i);
-        if (myWeps instanceof Shotgun) {
-          myWeps.update();
-          myWeps.shoot();
-        }
-      }
-    } else if (current == SMG) {
-      for (int i = 0; i < myWeapon.size(); i++) {
-        Weapon myWeps = myWeapon.get(i);
-        if (myWeps instanceof SMG) {
-          myWeps.update();
-          myWeps.shoot();
-        }
-      }
-    } else if (current == SNIPER) {
-      for (int i = 0; i < myWeapon.size(); i++) {
-        Weapon myWeps = myWeapon.get(i);
-        if (myWeps instanceof Sniper) {
-          myWeps.update();
-          myWeps.shoot();
-        }
-      }
-    }
+    currentGun = myWeapon.get(current-1);
+    currentGun.update();
+    currentGun.shoot();
   } //End of show
 
 

@@ -7,6 +7,7 @@ class Shotgun extends Weapon{
     offsetY = 20;
     gun = 2;
     shootTimer = 15;
+    m = 2.5;
   }
   
   void update() {

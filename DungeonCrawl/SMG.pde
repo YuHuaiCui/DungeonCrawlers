@@ -7,6 +7,7 @@ class SMG extends Weapon{
     offsetY = 20;
     gun = 3;
     shootTimer = 2;
+    m = 1.2;
   }
   
   void update() {

@@ -1,6 +1,6 @@
 class GameObject {
   int hp;
-  int size;
+  float size;
   PVector loc;
   PVector vel;
 

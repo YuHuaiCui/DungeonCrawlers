@@ -1,13 +1,13 @@
-class Rifle extends Weapon{
+class Pistol extends Weapon{
   
-  Rifle() {
-    imageWidth = 60;
-    imageHeight = 30;
-    offsetX = 20;
+  Pistol() {
+    imageWidth = 39;
+    imageHeight = 24;
+    offsetX = 9.5;
     offsetY = 20;
-    gun = 1;
+    gun = 6;
     shootTimer = 8;
-    m = 1.5;
+    m = 1;
   }
   
   void update() {
@@ -28,14 +28,14 @@ class Rifle extends Weapon{
       translate(myHero.loc.x+offsetX, myHero.loc.y+offsetY);
       rightRotate = -atan2(mouseX-myHero.loc.x, mouseY-myHero.loc.y) - (HALF_PI * 3);
       rotate(rightRotate);
-      image(rifleRight, 0, 0, imageWidth, imageHeight);
+      image(pistolRight, 0, 0, imageWidth, imageHeight);
       popMatrix();
     } else if (faceLeft) {
       pushMatrix();
       translate(myHero.loc.x-offsetX, myHero.loc.y+offsetY);
       leftRotate = -atan2(mouseX-myHero.loc.x, mouseY-myHero.loc.y) + (HALF_PI * 3);
       rotate(leftRotate);
-      image(rifleLeft, 0, 0, imageWidth, imageHeight);
+      image(pistolLeft, 0, 0, imageWidth, imageHeight);
       popMatrix();
     }
     imageMode(CENTER);

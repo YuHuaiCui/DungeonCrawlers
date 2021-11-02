@@ -9,7 +9,12 @@ void drawRoom() {
   //background
   rectMode(CENTER);
   imageMode(CORNER);
-  image(dwall, 0, -50, width, height + 100);
+  for (int y = 0; y < height; y += 80) {
+    for (int x = 0; x < width; x += 80) {
+      image(dwall, x, y, 80, 80);
+    }
+  }
+  //image(dwall, 0, -50, width, height + 100);
   fill(0, 0, 0, 75);
   noStroke();
   rect(width/2, height/2, width, height);
@@ -24,18 +29,47 @@ void drawRoom() {
   stroke(0);
   strokeWeight(10);
   fill(0);
+  imageMode(CENTER);
   if (northRoom != #FFFFFF) {
-    ellipse(width/2, height*0.1, 100, 100);
+    pushMatrix();
+    translate(width/2, 50);
+    if (myHero.loc.y >= width/2) image(doorClosed, 0, 0, 110, 100);
+    if (myHero.loc.y <= width/2 && myHero.loc.y > width/2 - (400/3)) image(doorHalfClosed, 0, 0, 110, 100);
+    if (myHero.loc.y <= width/2 - (400/3) && myHero.loc.y > width/2 - 2*(400/3)) image(doorHalfOpened, 0, 0, 110, 100);
+    if (myHero.loc.y <= width/2 - 2*(400/3)) image(doorOpened, 0, 0, 110, 100);
+    popMatrix();
   }
   if (southRoom != #FFFFFF) {
-    ellipse(width/2, height*0.9, 100, 100);
+    pushMatrix();
+    translate(width/2, height-50);
+    rotate(PI);
+    if (myHero.loc.y <= width/2) image(doorClosed, 0, 0, 110, 100);
+    if (myHero.loc.y >= width/2 && myHero.loc.y < width/2 + (400/3)) image(doorHalfClosed, 0, 0, 110, 100);
+    if (myHero.loc.y >= width/2 + (400/3) && myHero.loc.y < width/2 + 2*(400/3)) image(doorHalfOpened, 0, 0, 110, 100);
+    if (myHero.loc.y >= width/2 + 2*(400/3)) image(doorOpened, 0, 0, 110, 100);
+    popMatrix();
   }
   if (eastRoom != #FFFFFF) {
-    ellipse(width*0.9, height/2, 100, 100);
+    pushMatrix();
+    translate(width-50, height/2);
+    rotate(HALF_PI);
+    if (myHero.loc.x <= height/2) image(doorClosed, 0, 0, 110, 100);
+    if (myHero.loc.x >= height/2 && myHero.loc.x < height/2 + (400/3)) image(doorHalfClosed, 0, 0, 110, 100);
+    if (myHero.loc.x >= height/2 + (400/3) && myHero.loc.x < height/2 + 2*(400/3)) image(doorHalfOpened, 0, 0, 110, 100);
+    if (myHero.loc.x >= height/2 + 2*(400/3)) image(doorOpened, 0, 0, 110, 100);
+    popMatrix();
   }
   if (westRoom != #FFFFFF) {
-    ellipse(width*0.1, height/2, 100, 100);
+    pushMatrix();
+    translate(50, height/2);
+    rotate(3*HALF_PI);
+    if (myHero.loc.x >= height/2) image(doorClosed, 0, 0, 110, 100);
+    if (myHero.loc.x <= height/2 && myHero.loc.x > height/2 - (400/3)) image(doorHalfClosed, 0, 0, 110, 100);
+    if (myHero.loc.x <= height/2 - (400/3) && myHero.loc.x > height/2 - 2*(400/3)) image(doorHalfOpened, 0, 0, 110, 100);
+    if (myHero.loc.x <= height/2 - 2*(400/3)) image(doorOpened, 0, 0, 110, 100);
+    popMatrix();
   }
+  imageMode(CORNER);
 
   //corner lines
   strokeWeight(5);
@@ -47,8 +81,19 @@ void drawRoom() {
   //playable area
   strokeWeight(5);
   stroke(0);
+  noFill();
+  square(width/2, height/2, 1000);
+  strokeWeight(1);
   fill(blueGray);
-  rect(width/2, height/2, 800, 800);
+  rectMode(CORNER);
+  for (int y = 100; y < 900; y += 80) {
+    for (int x = 100; x < 900; x += 80) {
+      rect(x, y, 80, 80);
+      image(tile, x, y, 80, 80);
+    }
+  }
+  //rect(width/2, height/2, 800, 800);
+  rectMode(CENTER);
 }
 
 void drawGameObjects() {
@@ -75,9 +120,9 @@ void drawDarkness() {
 void drawMap() {
   pushMatrix();
   translate(30, 30);
-  fill(gray);
+  fill(gray, 150);
   strokeWeight(5);
-  stroke(orange);
+  stroke(orange, 150);
   rectMode(CENTER);
   rect(50, 50, 120, 120);
   rectMode(CORNER);
@@ -85,11 +130,11 @@ void drawMap() {
     for (int x = 0; x < map.width; x++) {
       noStroke();
       color a = map.get(x, y);
-      fill(a);
+      fill(a, 180);
       if (a != #FFFFFF) square(x * 10, y * 10, 10);
     }
   }
-  fill(green);
+  fill(green, 210);
   square(myHero.roomX * 10, myHero.roomY * 10, 10);
   popMatrix();
 }

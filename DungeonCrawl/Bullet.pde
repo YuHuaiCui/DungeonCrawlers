@@ -8,6 +8,8 @@ class Bullet extends GameObject {
   final int SHOTGUN = 2;
   final int SMG = 3;
   final int SNIPER = 4;
+  final int LAUNCHER = 5;
+  final int PISTOL = 6;
   int timer;
   PVector nudge;
 
@@ -34,6 +36,7 @@ class Bullet extends GameObject {
     for (int i = 0; i < myWeapon.size(); i++) {
       Weapon gun = myWeapon.get(i);
       if (current == RIFLE) {
+        size = 5.75;
         vel.setMag(28);
         timer = 60;
 
@@ -51,6 +54,7 @@ class Bullet extends GameObject {
           }
         }
       } else if (current == SHOTGUN) {
+        size = 7.75;
         vel.setMag(15);
         timer = 20;
 
@@ -70,6 +74,7 @@ class Bullet extends GameObject {
           }
         }
       } else if (current == SMG) {
+        size = 5.5;
         vel.setMag(20);
         timer = 20;
 
@@ -89,6 +94,7 @@ class Bullet extends GameObject {
           }
         }
       } else if (current == SNIPER) {
+        size = 17;
         vel.setMag(50);
         timer = 100;
 
@@ -151,39 +157,7 @@ class Bullet extends GameObject {
   }
 
   void rifleShow() {
-    if (faceRight) {
-      offsetX = 31.5;
-      offsetY = -5.5;
-
-      pushMatrix();
-      translate(loc.x, loc.y);
-      rotate(rightRotate);
-      strokeWeight(2);
-      stroke(255);
-      noFill();
-      pushMatrix();
-      translate(offsetX, offsetY);
-      rotate(HALF_PI);
-      image(rifleBullet, 0, 0, 4, 7.5);
-      popMatrix();
-      popMatrix();
-    } else if (faceLeft) {
-      offsetX = -31.5;
-      offsetY = -5.5;
-
-      pushMatrix();
-      translate(loc.x, loc.y);
-      rotate(leftRotate);
-      strokeWeight(2);
-      stroke(255);
-      noFill();
-      pushMatrix();
-      translate(offsetX, offsetY);
-      rotate(HALF_PI*3);
-      image(rifleBullet, 0, 0, 4, 7.5);
-      popMatrix();
-      popMatrix();
-    }
+    drawBullet(31.5, -5.5, rifleBullet, 7.5, 4);
   } //End of rifleShow
 
   void shotgunShow() {
@@ -200,7 +174,7 @@ class Bullet extends GameObject {
       pushMatrix();
       translate(offsetX, offsetY);
       rotate(HALF_PI + r);
-      image(rifleBullet, 0, 0, 4, 7.5);
+      image(shotgunBullet, 0, 0, 5, 10.5);
       popMatrix();
       popMatrix();
     } else if (faceLeft) {
@@ -216,7 +190,7 @@ class Bullet extends GameObject {
       pushMatrix();
       translate(offsetX, offsetY);
       rotate(HALF_PI*3 + r);
-      image(rifleBullet, 0, 0, 4, 7.5);
+      image(shotgunBullet, 0, 0, 5, 10.5);
       popMatrix();
       popMatrix();
     }
@@ -236,7 +210,7 @@ class Bullet extends GameObject {
       pushMatrix();
       translate(offsetX, offsetY);
       rotate(HALF_PI);
-      image(rifleBullet, 0, 0, 4, 7.5);
+      image(smgBullet, 0, 0, 5, 6);
       popMatrix();
       popMatrix();
     } else if (faceLeft) {
@@ -252,46 +226,14 @@ class Bullet extends GameObject {
       pushMatrix();
       translate(offsetX, offsetY);
       rotate(HALF_PI*3);
-      image(rifleBullet, 0, 0, 4, 7.5);
+      image(smgBullet, 0, 0, 5, 6);
       popMatrix();
       popMatrix();
     }
   } //End of SMGShow
   
   void sniperShow() {
-    if (faceRight) {
-      offsetX = 35.5;
-      offsetY = -3.5;
-
-      pushMatrix();
-      translate(loc.x, loc.y);
-      rotate(rightRotate);
-      strokeWeight(2);
-      stroke(255);
-      noFill();
-      pushMatrix();
-      translate(offsetX, offsetY);
-      rotate(HALF_PI);
-      image(rifleBullet, 0, 0, 4, 7.5);
-      popMatrix();
-      popMatrix();
-    } else if (faceLeft) {
-      offsetX = -35.5;
-      offsetY = -3.5;
-
-      pushMatrix();
-      translate(loc.x, loc.y);
-      rotate(leftRotate);
-      strokeWeight(2);
-      stroke(255);
-      noFill();
-      pushMatrix();
-      translate(offsetX, offsetY);
-      rotate(HALF_PI*3);
-      image(rifleBullet, 0, 0, 4, 7.5);
-      popMatrix();
-      popMatrix();
-    }
+    drawBullet(45.5, -1.5, sniperBullet, 20, 14);
   }
 
   void rifleAct() {
@@ -325,4 +267,41 @@ class Bullet extends GameObject {
     if (loc.y < height*0.1 + size/2 + 32.5) hp = 0;
     if (loc.y > height*0.9 + size/2 - 32.5) hp = 0;
   } //End of sniperAct
+  
+  void drawBullet(float OFX, float OFY, PImage bullet, float x, float y) {
+    offsetY = OFY;
+    if (faceRight) {
+      offsetX = OFX;
+      
+
+      pushMatrix();
+      translate(loc.x, loc.y);
+      rotate(rightRotate);
+      strokeWeight(2);
+      stroke(255);
+      noFill();
+      pushMatrix();
+      translate(offsetX, offsetY);
+      rotate(HALF_PI);
+      image(bullet, 0, 0, y, x);
+      popMatrix();
+      popMatrix();
+    } else if (faceLeft) {
+      offsetX = -OFX;
+
+
+      pushMatrix();
+      translate(loc.x, loc.y);
+      rotate(leftRotate);
+      strokeWeight(2);
+      stroke(255);
+      noFill();
+      pushMatrix();
+      translate(offsetX, offsetY);
+      rotate(HALF_PI*3);
+      image(bullet, 0, 0, y, x);
+      popMatrix();
+      popMatrix();
+    }
+  } //End of drawBullet
 }//End of bullet
