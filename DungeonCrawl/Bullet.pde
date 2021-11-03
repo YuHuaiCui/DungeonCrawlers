@@ -156,17 +156,12 @@ class Bullet extends GameObject {
   }
 
   Bullet(PVector pos) {
-    hp = 0;
+    hp = 1;
     size = 13;
-    timer = 60000;
+    timer = 60;
     loc = new PVector(pos.x, pos.y);
     vel = new PVector(0, -1);
-    nudge = new PVector(0, 10);
-    r = PI+random(0, TWO_PI);
-    nudge.rotate(r);
-    nudge.setMag(23);
-    loc.add(nudge);
-    vel.rotate(r); //180 degrees
+    r = random(0, TWO_PI);
     vel.setMag(5);
     vel.rotate(r);
     current = LAUNCHERSHELL;
@@ -312,7 +307,6 @@ class Bullet extends GameObject {
     rotate(r);
     image(launcherShell, 0, 0, 15, 11);
     popMatrix();
-    println(timer, vel, loc);
   } //End of launchershellShow
 
   void rifleAct() {
@@ -350,20 +344,14 @@ class Bullet extends GameObject {
   void launcherAct() {
     loc.add(vel);
 
-    if (loc.x < width*0.1 + size + 32.5) hp = 1;
-    if (loc.x > width*0.9 + size - 32.5) hp = 1;
-    if (loc.y < height*0.1 + size + 32.5) hp = 1;
-    if (loc.y > height*0.9 + size - 32.5) hp = 1;
+    if (loc.x < width*0.1 + size) hp = 1;
+    if (loc.x > width*0.9 - size) hp = 1;
+    if (loc.y < height*0.1 + size) hp = 1;
+    if (loc.y > height*0.9 - size) hp = 1;
 
-    /*
-    if (loc.x < width*0.1 + size/2 + 32.5) hp = 1;
-     if (loc.x > width*0.9 + size/2 - 32.5) hp = 1;
-     if (loc.y < height*0.1 + size/2 + 32.5) hp = 1;
-     if (loc.y > height*0.9 + size/2 - 32.5) hp = 1;
-     */
 
     if (hp == 1) {
-      for (int i = 0; i < 50; i++) {
+      for (int i = 0; i < 600; i++) {
         myObjects.add(new Bullet(loc));
       }
       hp = 0;
@@ -380,10 +368,10 @@ class Bullet extends GameObject {
 
   void launchershellAct() {
     loc.add(vel);
-    if (loc.x < width*0.1 + size/2 + 32.5) hp = 0;
-    if (loc.x > width*0.9 + size/2 - 32.5) hp = 0;
-    if (loc.y < height*0.1 + size/2 + 32.5) hp = 0;
-    if (loc.y > height*0.9 + size/2 - 32.5) hp = 0;
+    if (loc.x < width*0.1) hp = 0;
+    if (loc.x > width*0.9) hp = 0;
+    if (loc.y < height*0.1) hp = 0;
+    if (loc.y > height*0.9) hp = 0;
   } //End of launchershellAct
 
   void drawBullet(float OFX, float OFY, PImage bullet, float x, float y) {
