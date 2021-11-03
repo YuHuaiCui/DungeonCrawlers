@@ -1,5 +1,6 @@
 class Hero extends GameObject {
   float speed;
+  float sizeX, sizeY;
   int roomX, roomY; 
   boolean faceLeft, faceRight;
   int current;
@@ -17,12 +18,16 @@ class Hero extends GameObject {
     roomY = 1;
     speed = 5;
     size = 90;
+    sizeX = 60;
+    sizeY = 90;
     faceRight = true;
     faceLeft = false;
     current = 1;
   }
 
   void show() {
+    //rectMode(CENTER);
+    //rect(loc.x, loc.y, 60, 90);
     float a = atan2(mouseX-myHero.loc.x, mouseY-myHero.loc.y) - (HALF_PI * 3);
     if (a < -HALF_PI && a > -HALF_PI*3) {
       faceRight = true;
@@ -61,20 +66,27 @@ class Hero extends GameObject {
     currentGun = myWeapon.get(current-1);
     currentGun.update();
     currentGun.shoot();
+
+    //circle(loc.x, loc.y, 10);
+    //show center of Hero
   } //End of show
 
 
   void act() {
-    super.act();
+    loc.add(vel);
 
     //Moving
     if (!shiftkey) {
       vel.limit(speed);
     } else vel.limit(speed*2);
-    if (wkey || upkey && !shiftkey) vel.y = -speed;
-    else if (wkey || upkey && shiftkey) vel.y = -speed * 2;
-    if (skey || downkey && !shiftkey) vel.y = speed;
-    else if (skey || downkey && shiftkey) vel.y = speed * 2;
+    if (wkey || upkey) {
+      if (!shiftkey) vel.y = -speed;
+      else if (shiftkey) vel.y = -speed * 2;
+    }
+    if (skey || downkey) {
+      if (!shiftkey) vel.y = speed;
+      else if (shiftkey) vel.y = speed * 2;
+    }
     if (akey || leftkey) {
       if (!shiftkey) vel.x = -speed;
       else if (shiftkey) vel.x = -speed * 2;
@@ -91,38 +103,47 @@ class Hero extends GameObject {
     if (!akey && !dkey && !leftkey && !rightkey) vel.x = vel.x * 0.75;
 
     //wall collisions
-    if (northRoom == #FFFFFF && loc.y < height*0.125) loc.y = height*0.129;
-    if (southRoom == #FFFFFF && loc.y > height*0.875) loc.y = height*0.871;
-    if (eastRoom == #FFFFFF && loc.x > width*0.875) loc.x = width*0.871;
-    if (westRoom == #FFFFFF && loc.x < width*0.125) loc.x = width*0.129;
-    if (northRoom != #FFFFFF && loc.y < height*0.125 && (loc.x < width/2-90 || loc.x > width/2+90)) loc.y = height*0.129;
-    if (southRoom != #FFFFFF && loc.y > height*0.875 && (loc.x < width/2-90 || loc.x > width/2+90)) loc.y = height*0.871;
-    if (eastRoom != #FFFFFF && loc.x > width*0.875 && (loc.y < height/2-90 || loc.y > height/2+90)) loc.x = width*0.871;
-    if (westRoom != #FFFFFF && loc.x < width*0.125 && (loc.y < height/2-90 || loc.y > height/2+90)) loc.x = width*0.129;
+    if (northRoom == #FFFFFF && loc.y < height*0.1 + sizeY/2) loc.y = height*0.1 + sizeY/2;
+    if (southRoom == #FFFFFF && loc.y > height*0.9 - sizeY/2) loc.y = height*0.9 - sizeY/2;
+    if (eastRoom == #FFFFFF && loc.x > width*0.9 - sizeX/2) loc.x = width*0.9 - sizeX/2;
+    if (westRoom == #FFFFFF && loc.x < width*0.1 + sizeX/2) loc.x = width*0.1 + sizeX/2;
+
+    if (northRoom != #FFFFFF && loc.y < height*0.1 + sizeY/2 && (loc.x < width/2-20 || loc.x > width/2+20)) {
+      loc.y = height*0.1 + sizeY/2;
+    }
+    if (southRoom != #FFFFFF && loc.y > height*0.9 - sizeY/2 && (loc.x < width/2-20 || loc.x > width/2+20)) {
+      loc.y = height*0.9 - sizeY/2;
+    }
+    if (eastRoom != #FFFFFF && loc.x > width*0.9 - sizeX/2 && (loc.y < height/2-20 || loc.y > height/2+20)) {
+      loc.x = width*0.9 - sizeX/2;
+    }
+    if (westRoom != #FFFFFF && loc.x < width*0.1 + sizeX/2 && (loc.y < height/2-20 || loc.y > height/2+20)) {
+      loc.x = width*0.1 + sizeX/2;
+    }
 
     //check exits
     //north
-    if (northRoom != #FFFFFF && loc.y <= height*0.1 && loc.x >= width/2-50 && loc.x <= width/2+50) {
+    if (northRoom != #FFFFFF && loc.y < height*0.1 + sizeY/2 && loc.x >= width/2-20 && loc.x <= width/2+20) {
       roomY--;
-      loc = new PVector (width/2, height*0.875-10);
+      loc = new PVector (width/2, height*0.9 - sizeY/2 - 10);
     }
 
     //south
-    else if (southRoom != #FFFFFF && loc.y >= height*0.9 && loc.x >= width/2-50 && loc.x <= width/2+50) {
+    else if (southRoom != #FFFFFF && loc.y > height*0.9 - sizeY/2 && loc.x >= width/2-20 && loc.x <= width/2+20) {
       roomY++;
-      loc = new PVector (width/2, height*0.125+10);
+      loc = new PVector (width/2, height*0.1 + sizeY/2 + 10);
     }
 
     //east
-    else if (eastRoom != #FFFFFF && loc.x >= width*0.9 && loc.y >= height/2-50 && loc.y <= height/2+50) {
+    else if (eastRoom != #FFFFFF && loc.x > width*0.9 - sizeX/2 && loc.y >= height/2-20 && loc.y <= height/2+20) {
       roomX++;
-      loc = new PVector (width*0.125+10, width/2);
+      loc = new PVector (width*0.1 + sizeX/2 + 10, width/2);
     }
 
     //west
-    else if (westRoom != #FFFFFF && loc.x <= width*0.1 && loc.y >= height/2-50 && loc.y <= height/2+50) {
+    else if (westRoom != #FFFFFF && loc.x < width*0.1 + sizeX/2 && loc.y >= height/2-20 && loc.y <= height/2+20) {
       roomX--;
-      loc = new PVector (width*0.875-10, width/2);
+      loc = new PVector (width*0.9 - sizeX/2 - 10, width/2);
     }
   } //End of act
 } //End of Hero class

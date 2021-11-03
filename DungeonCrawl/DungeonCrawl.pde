@@ -65,18 +65,6 @@ PImage sniperBullet;
 PImage launcherBullet;
 PImage launcherShell;
 PImage pistolBullet;
-PImage rifleRight;
-PImage rifleLeft;
-PImage shotgunRight;
-PImage shotgunLeft;
-PImage smgRight;
-PImage smgLeft;
-PImage sniperRight;
-PImage sniperLeft;
-PImage launcherLeft;
-PImage launcherRight;
-PImage pistolRight;
-PImage pistolLeft;
 PImage muzzleFlash;
 
 void setup() {
@@ -93,19 +81,6 @@ void setup() {
       darkness.add(new DarknessCell(x, y, 10));
     }
   }
-
-  //create objects
-  myObjects = new ArrayList<GameObject>(1000);
-  myHero = new Hero();
-  myObjects.add(myHero);
-  myWeapon = new ArrayList<Weapon>(1000);
-  myWeapon.add(new Rifle());
-  myWeapon.add(new Shotgun());
-  myWeapon.add(new SMG());
-  myWeapon.add(new Sniper());
-  myWeapon.add(new Launcher());
-  myWeapon.add(new Pistol());
-
   //load font
   dark = createFont("pdark.ttf", 32);
 
@@ -132,19 +107,19 @@ void setup() {
   launcherBullet = loadImage("launcherBullet.png");
   launcherShell = loadImage("launcherShell.png");
   pistolBullet = loadImage("pistolBullet.png");
-  rifleRight = loadImage("rifleRight.png");
-  rifleLeft = loadImage("rifleLeft.png");
-  shotgunRight = loadImage("shotgunRight.png");
-  shotgunLeft = loadImage("shotgunLeft.png");
-  smgRight = loadImage("smgRight.png");
-  smgLeft = loadImage("smgLeft.png");
-  sniperRight = loadImage("sniperRight.png");
-  sniperLeft = loadImage("sniperLeft.png");
-  launcherRight = loadImage("launcherRight.png");
-  launcherLeft = loadImage("launcherLeft.png");
-  pistolRight = loadImage("pistolRight.png");
-  pistolLeft = loadImage("pistolLeft.png");
   muzzleFlash = loadImage("smgFlash.png");
+
+  //create objects
+  myObjects = new ArrayList<GameObject>(1000);
+  myHero = new Hero();
+  myObjects.add(myHero);
+  myWeapon = new ArrayList<Weapon>();
+  myWeapon.add(new Rifle());
+  myWeapon.add(new Shotgun());
+  myWeapon.add(new SMG());
+  myWeapon.add(new Sniper());
+  myWeapon.add(new Launcher());
+  myWeapon.add(new Pistol());
 }
 
 void draw() {

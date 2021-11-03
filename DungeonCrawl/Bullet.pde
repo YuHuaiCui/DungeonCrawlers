@@ -10,6 +10,7 @@ class Bullet extends GameObject {
   final int SNIPER = 4;
   final int LAUNCHER = 5;
   final int PISTOL = 6;
+  final int LAUNCHERSHELL = 7;
   int timer;
   PVector nudge;
 
@@ -44,12 +45,12 @@ class Bullet extends GameObject {
           if (gun.faceRight) {
             faceLeft = false;
             faceRight = true;
-            loc = new PVector(myHero.loc.x+20, myHero.loc.y+20);
+            loc = new PVector(myHero.loc.x+gun.offsetX, myHero.loc.y+gun.offsetY);
             rightRotate = rightR;
           } else if (gun.faceLeft) {
             faceLeft = true;
             faceRight = false;
-            loc = new PVector(myHero.loc.x-20, myHero.loc.y+20);
+            loc = new PVector(myHero.loc.x-gun.offsetX, myHero.loc.y+gun.offsetY);
             leftRotate = leftR;
           }
         }
@@ -102,12 +103,49 @@ class Bullet extends GameObject {
           if (gun.faceRight) {
             faceLeft = false;
             faceRight = true;
-            loc = new PVector(myHero.loc.x+20, myHero.loc.y+20);
+            loc = new PVector(myHero.loc.x+gun.offsetX, myHero.loc.y+gun.offsetY);
             rightRotate = rightR;
           } else if (gun.faceLeft) {
             faceLeft = true;
             faceRight = false;
-            loc = new PVector(myHero.loc.x-20, myHero.loc.y+20);
+            loc = new PVector(myHero.loc.x-gun.offsetX, myHero.loc.y+gun.offsetY);
+            leftRotate = leftR;
+          }
+        }
+      } else if (current == LAUNCHER) {
+        size = 26;
+        vel.setMag(20);
+        timer = 100;
+        hp = 2;
+
+        if (gun instanceof Launcher) {
+          if (gun.faceRight) {
+            faceLeft = false;
+            faceRight = true;
+            loc = new PVector(myHero.loc.x+gun.offsetX, myHero.loc.y+gun.offsetY);
+            rightRotate = rightR;
+          } else if (gun.faceLeft) {
+            faceLeft = true;
+            faceRight = false;
+            loc = new PVector(myHero.loc.x-gun.offsetX, myHero.loc.y+gun.offsetY);
+            leftRotate = leftR;
+          }
+        }
+      } else if (current == PISTOL) {
+        size = 10;
+        vel.setMag(50);
+        timer = 100;
+
+        if (gun instanceof Pistol) {
+          if (gun.faceRight) {
+            faceLeft = false;
+            faceRight = true;
+            loc = new PVector(myHero.loc.x+10, myHero.loc.y+20);
+            rightRotate = rightR;
+          } else if (gun.faceLeft) {
+            faceLeft = true;
+            faceRight = false;
+            loc = new PVector(myHero.loc.x-10, myHero.loc.y+20);
             leftRotate = leftR;
           }
         }
@@ -117,12 +155,25 @@ class Bullet extends GameObject {
     }
   }
 
-  void show() {
-    //strokeWeight(3);
-    //stroke(255);
-    //noFill();
-    //ellipse(loc.x, loc.y, size, size);
+  Bullet(PVector pos) {
+    hp = 0;
+    size = 13;
+    timer = 60000;
+    loc = new PVector(pos.x, pos.y);
+    vel = new PVector(0, -1);
+    nudge = new PVector(0, 10);
+    r = PI+random(0, TWO_PI);
+    nudge.rotate(r);
+    nudge.setMag(23);
+    loc.add(nudge);
+    vel.rotate(r); //180 degrees
+    vel.setMag(5);
+    vel.rotate(r);
+    current = LAUNCHERSHELL;
+    imageMode(CENTER);
+  }
 
+  void show() {
     if (current == RIFLE) {
       rifleShow();
     } else if (current == SHOTGUN) {
@@ -131,13 +182,18 @@ class Bullet extends GameObject {
       smgShow();
     } else if (current == SNIPER) {
       sniperShow();
+    } else if (current == LAUNCHER) {
+      launcherShow();
+    } else if (current == PISTOL) {
+      pistolShow();
+    } else if (current == LAUNCHERSHELL) {
+      launchershellShow();
     } else {
       println("Bullet.SHOW ERROR!");
     }
   }
 
   void act() {
-
     if (current == RIFLE) {
       rifleAct();
     } else if (current == SHOTGUN) {
@@ -146,6 +202,12 @@ class Bullet extends GameObject {
       smgAct();
     } else if (current == SNIPER) {
       sniperAct();
+    } else if (current == LAUNCHER) {
+      launcherAct();
+    } else if (current == PISTOL) {
+      pistolAct();
+    } else if (current == LAUNCHERSHELL) {
+      launchershellAct();
     } else {
       println("Bullet.ACT ERROR!");
     }
@@ -231,10 +293,27 @@ class Bullet extends GameObject {
       popMatrix();
     }
   } //End of SMGShow
-  
+
   void sniperShow() {
     drawBullet(45.5, -1.5, sniperBullet, 20, 14);
-  }
+  } //End of sniperShow
+
+  void launcherShow() {
+    drawBullet(50, -9, launcherBullet, 26, 26);
+  } //End of launcherShow
+
+  void pistolShow() {
+    drawBullet(21, -6, pistolBullet, 10, 10);
+  } //End of pistolShow
+
+  void launchershellShow() {
+    pushMatrix();
+    translate(loc.x, loc.y);
+    rotate(r);
+    image(launcherShell, 0, 0, 15, 11);
+    popMatrix();
+    println(timer, vel, loc);
+  } //End of launchershellShow
 
   void rifleAct() {
     loc.add(vel);
@@ -259,7 +338,7 @@ class Bullet extends GameObject {
     if (loc.y < height*0.1 + size/2 + 32.5) hp = 0;
     if (loc.y > height*0.9 + size/2 - 32.5) hp = 0;
   } //End of smgAct
-  
+
   void sniperAct() {
     loc.add(vel);
     if (loc.x < width*0.1 + size/2 + 32.5) hp = 0;
@@ -267,19 +346,55 @@ class Bullet extends GameObject {
     if (loc.y < height*0.1 + size/2 + 32.5) hp = 0;
     if (loc.y > height*0.9 + size/2 - 32.5) hp = 0;
   } //End of sniperAct
-  
+
+  void launcherAct() {
+    loc.add(vel);
+
+    if (loc.x < width*0.1 + size + 32.5) hp = 1;
+    if (loc.x > width*0.9 + size - 32.5) hp = 1;
+    if (loc.y < height*0.1 + size + 32.5) hp = 1;
+    if (loc.y > height*0.9 + size - 32.5) hp = 1;
+
+    /*
+    if (loc.x < width*0.1 + size/2 + 32.5) hp = 1;
+     if (loc.x > width*0.9 + size/2 - 32.5) hp = 1;
+     if (loc.y < height*0.1 + size/2 + 32.5) hp = 1;
+     if (loc.y > height*0.9 + size/2 - 32.5) hp = 1;
+     */
+
+    if (hp == 1) {
+      for (int i = 0; i < 50; i++) {
+        myObjects.add(new Bullet(loc));
+      }
+      hp = 0;
+    }
+  } //End of launcherAct
+
+  void pistolAct() {
+    loc.add(vel);
+    if (loc.x < width*0.1 + size/2 + 32.5) hp = 0;
+    if (loc.x > width*0.9 + size/2 - 32.5) hp = 0;
+    if (loc.y < height*0.1 + size/2 + 32.5) hp = 0;
+    if (loc.y > height*0.9 + size/2 - 32.5) hp = 0;
+  } //End of pistolAct
+
+  void launchershellAct() {
+    loc.add(vel);
+    if (loc.x < width*0.1 + size/2 + 32.5) hp = 0;
+    if (loc.x > width*0.9 + size/2 - 32.5) hp = 0;
+    if (loc.y < height*0.1 + size/2 + 32.5) hp = 0;
+    if (loc.y > height*0.9 + size/2 - 32.5) hp = 0;
+  } //End of launchershellAct
+
   void drawBullet(float OFX, float OFY, PImage bullet, float x, float y) {
+    noStroke();
+    noFill();
     offsetY = OFY;
     if (faceRight) {
       offsetX = OFX;
-      
-
       pushMatrix();
       translate(loc.x, loc.y);
       rotate(rightRotate);
-      strokeWeight(2);
-      stroke(255);
-      noFill();
       pushMatrix();
       translate(offsetX, offsetY);
       rotate(HALF_PI);
@@ -288,14 +403,9 @@ class Bullet extends GameObject {
       popMatrix();
     } else if (faceLeft) {
       offsetX = -OFX;
-
-
       pushMatrix();
       translate(loc.x, loc.y);
       rotate(leftRotate);
-      strokeWeight(2);
-      stroke(255);
-      noFill();
       pushMatrix();
       translate(offsetX, offsetY);
       rotate(HALF_PI*3);
