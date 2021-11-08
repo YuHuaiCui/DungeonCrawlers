@@ -1,0 +1,5 @@
+void pause() {
+}
+
+void pauseReleased() {
+}
